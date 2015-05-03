@@ -6,6 +6,8 @@ public class ConnectToHeadset : MonoBehaviour {
     Headset headset;
     GUIStyle style = new GUIStyle();
 
+    public Transform meditationBar;
+
     void Awake() {
         style.fontSize = 30;
         style.normal.textColor = Color.white;
@@ -27,9 +29,9 @@ public class ConnectToHeadset : MonoBehaviour {
 
 #endif
     void OnGUI() {
-        GUI.Label(new Rect(10, 10, 200, 50), headset.GetConnectString(), style);
-        GUI.Label(new Rect(10, 60, 50, 50), headset.GetMeditation().ToString(), style);
-        GUI.Label(new Rect(10, 110, 50, 50), headset.GetPoorSignalValue().ToString(), style);
+        //GUI.Label(new Rect(10, 10, 200, 50), headset.GetConnectString(), style);
+        GUI.Label(new Rect(10, 60, 50, 50), meditation.ToString(), style);
+        //GUI.Label(new Rect(10, 110, 50, 50), headset.GetPoorSignalValue().ToString(), style);
     }
 
 
@@ -38,16 +40,14 @@ public class ConnectToHeadset : MonoBehaviour {
     }
 
     public Material monsterMat;
+    int meditation = 0;
 
     void CheckMeditation() {
-        int meditation = headset.GetMeditation();
+        meditation = headset.GetMeditation();
+        float scale = (float)meditation / 20;
+        meditationBar.localScale = new Vector3(scale, meditationBar.localScale.y, meditationBar.localScale.z);
+        meditationBar.position = new Vector3((scale / 2) - 2.5f, meditationBar.position.y, meditationBar.position.z);
 
-        if (meditation >= 50) {
-            monsterMat.SetFloat("_Blend", Mathf.Clamp01(monsterMat.GetFloat("_Blend") + 0.01f));
-        }
-        else  {
-            monsterMat.SetFloat("_Blend", Mathf.Clamp01(monsterMat.GetFloat("_Blend") - 0.01f));
-        }
     }
 
 }

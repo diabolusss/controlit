@@ -23,7 +23,7 @@ public class RandomizedHeadset : Headset {
     private int floatTrend = 1;
 
     private int RandomInt(int value) {
-        int newValue = value + (Random.Range(0, 3) * intTrend);
+        int newValue = value + (Random.Range(0, 2) * intTrend);
         if (newValue > 100 || newValue < 0){
             intTrend *= -1;
         }
